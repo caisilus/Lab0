@@ -1,6 +1,6 @@
 function get_input(prompt_message) {
-    input = prompt(prompt_message)
-    flag = false
+    let input = prompt(prompt_message)
+    let value = NaN
     do {
         value = parseFloat(input)
         if (!isNaN(value)) {
@@ -13,20 +13,37 @@ function get_input(prompt_message) {
 }
 
 function integrate(a, b, f, n=1000.0) {
-    deltaX = (b - a) / n
-    sum = 0
+    let deltaX = (b - a) / n
+    let sum = 0
     for (let i = 0; i < n; i++) {
         sum += f(a + deltaX * i)
     }
     return sum * deltaX
 }
 
+function integrate_fixed_error(a, b, f, eps=1e-4) {
+    let last_n = 500
+    let n = 1000
+    
+    let last_integral = integrate(a, b, f, last_n)
+    let integral = integrate(a, b, f, n)
+    while (Math.abs(integral - last_integral) > eps) {
+        last_n = n
+        n = last_n * 2
+        last_integral = integrate(a, b, f, last_n)
+        integral = integrate(a, b, f, n)
+    }
+
+    return integral
+}
+
 function main() {
     alert("Let's integrate!")
-    a = get_input("Enter left integration limit")
-    b = get_input("Enter right integration limit")
-    f = (x) => x*x - Math.cos(x)
-    alert(`Result = ${integrate(a, b, f)}`)
+    let a = get_input("Enter left integration limit")
+    let b = get_input("Enter right integration limit")
+    let f = (x) => x*x - Math.cos(x)
+    let eps = get_input("Enter acceptable error")
+    alert(`Result = ${integrate_fixed_error(a, b, f, eps)}`)
 }
 
 main()
