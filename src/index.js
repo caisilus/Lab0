@@ -20,6 +20,9 @@ function integrate(a, b, f, n=1000.0) {
     }
     return sum * deltaX
 }
+function check_error(first, second, eps) {
+    return Math.abs(first - second) > eps
+}
 
 function integrate_fixed_error(a, b, f, eps=1e-4) {
     let last_n = 500
@@ -27,7 +30,7 @@ function integrate_fixed_error(a, b, f, eps=1e-4) {
     
     let last_integral = integrate(a, b, f, last_n)
     let integral = integrate(a, b, f, n)
-    while (Math.abs(integral - last_integral) > eps) {
+    while (check_error(last_integral, integral, eps) && n < 10000) {
         last_n = n
         n = last_n * 2
         last_integral = integrate(a, b, f, last_n)
