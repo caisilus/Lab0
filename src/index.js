@@ -44,6 +44,9 @@ function main() {
     alert("Let's integrate!")
     let a = get_input("Enter left integration limit")
     let b = get_input("Enter right integration limit")
+    if (a > b) {
+        [a, b] = [b, a]
+    }
     let f = (x) => x*x - Math.cos(x)
     let eps = get_input("Enter acceptable error")
     alert(`Result = ${integrate_fixed_error(a, b, f, eps)}`)
