@@ -12,11 +12,6 @@ function get_input(prompt_message) {
     return value
 }
 
-alert("Let's integrate!")
-a = get_input("Enter left integration limit")
-b = get_input("Enter right integration limit")
-console.log(`a=${a}, b=${b}`)
-
 function integrate(a, b, f, n=1000.0) {
     deltaX = (b - a) / n
     sum = 0
@@ -26,5 +21,12 @@ function integrate(a, b, f, n=1000.0) {
     return sum * deltaX
 }
 
-f = (x) => x*x - Math.cos(x)
-alert(`Result = ${integrate(a, b, f)}`)
+function main() {
+    alert("Let's integrate!")
+    a = get_input("Enter left integration limit")
+    b = get_input("Enter right integration limit")
+    f = (x) => x*x - Math.cos(x)
+    alert(`Result = ${integrate(a, b, f)}`)
+}
+
+main()
